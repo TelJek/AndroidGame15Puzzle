@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -18,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
-            android:id="@+id/button18"
+            android:id="@+id/buttonGameBoard02"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -26,16 +27,18 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="9"
-            app:layout_constraintBottom_toTopOf="@+id/button14"
-            app:layout_constraintEnd_toStartOf="@+id/button16"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard03"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard12"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button10" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard01" />
 
         <Button
-            android:id="@+id/button16"
+            android:id="@+id/buttonGameBoard12"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -43,15 +46,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="10"
-            app:layout_constraintBottom_toTopOf="@+id/button12"
-            app:layout_constraintEnd_toStartOf="@+id/button17"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard13"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard22"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button18"
-            app:layout_constraintTop_toBottomOf="@+id/button8" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard02"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard11" />
 
         <Button
-            android:id="@+id/button17"
+            android:id="@+id/buttonGameBoard22"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -59,15 +64,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="11"
-            app:layout_constraintBottom_toTopOf="@+id/button13"
-            app:layout_constraintEnd_toStartOf="@+id/button19"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard23"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard32"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button16"
-            app:layout_constraintTop_toBottomOf="@+id/button9" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard12"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard21" />
 
         <Button
-            android:id="@+id/button19"
+            android:id="@+id/buttonGameBoard32"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -75,15 +82,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="12"
-            app:layout_constraintBottom_toTopOf="@+id/button15"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard33"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button17"
-            app:layout_constraintTop_toBottomOf="@+id/button11" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard22"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard31" />
 
         <Button
-            android:id="@+id/button14"
+            android:id="@+id/buttonGameBoard03"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -91,16 +100,18 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="13"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button12"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard13"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button18" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard02" />
 
         <Button
-            android:id="@+id/button12"
+            android:id="@+id/buttonGameBoard13"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -108,15 +119,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="14"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button13"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard23"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button14"
-            app:layout_constraintTop_toBottomOf="@+id/button16" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard03"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard12" />
 
         <Button
-            android:id="@+id/button13"
+            android:id="@+id/buttonGameBoard23"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -124,15 +137,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="15"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button15"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard33"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button12"
-            app:layout_constraintTop_toBottomOf="@+id/button17" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard13"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard22" />
 
         <Button
-            android:id="@+id/button15"
+            android:id="@+id/buttonGameBoard33"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -140,14 +155,19 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button13"
-            app:layout_constraintTop_toBottomOf="@+id/button19" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard23"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard32"
+            tools:ignore="TextContrastCheck" />
 
         <Button
-            android:id="@+id/button10"
+            android:id="@+id/buttonGameBoard01"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -155,16 +175,18 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="5"
-            app:layout_constraintBottom_toTopOf="@+id/button18"
-            app:layout_constraintEnd_toStartOf="@+id/button8"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard02"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard11"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button6" />
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard00" />
 
         <Button
-            android:id="@+id/button8"
+            android:id="@+id/buttonGameBoard11"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -172,15 +194,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="6"
-            app:layout_constraintBottom_toTopOf="@+id/button16"
-            app:layout_constraintEnd_toStartOf="@+id/button9"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard12"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard21"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button10"
-            app:layout_constraintTop_toBottomOf="@+id/button7" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard01"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard10" />
 
         <Button
-            android:id="@+id/button9"
+            android:id="@+id/buttonGameBoard21"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -188,15 +212,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="7"
-            app:layout_constraintBottom_toTopOf="@+id/button17"
-            app:layout_constraintEnd_toStartOf="@+id/button11"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard22"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard31"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button8"
-            app:layout_constraintTop_toBottomOf="@+id/button5" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard11"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard20" />
 
         <Button
-            android:id="@+id/button11"
+            android:id="@+id/buttonGameBoard31"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -204,15 +230,17 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="8"
-            app:layout_constraintBottom_toTopOf="@+id/button19"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard32"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button9"
-            app:layout_constraintTop_toBottomOf="@+id/button4" />
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard21"
+            app:layout_constraintTop_toBottomOf="@+id/buttonGameBoard30" />
 
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/buttonGameBoard00"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -220,9 +248,11 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="1"
-            app:layout_constraintBottom_toTopOf="@+id/button10"
-            app:layout_constraintEnd_toStartOf="@+id/button7"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard01"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard10"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
@@ -230,7 +260,7 @@
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/buttonGameBoard10"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -238,16 +268,18 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="2"
-            app:layout_constraintBottom_toTopOf="@+id/button8"
-            app:layout_constraintEnd_toStartOf="@+id/button5"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard11"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard20"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button6"
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard00"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <Button
-            android:id="@+id/button5"
+            android:id="@+id/buttonGameBoard20"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -255,16 +287,18 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="3"
-            app:layout_constraintBottom_toTopOf="@+id/button9"
-            app:layout_constraintEnd_toStartOf="@+id/button4"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard21"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameBoard30"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button7"
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard10"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/buttonGameBoard30"
             style="@style/game_board_button"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -272,11 +306,13 @@
             android:insetTop="6dp"
             android:insetRight="6dp"
             android:insetBottom="6dp"
-            android:text="4"
-            app:layout_constraintBottom_toTopOf="@+id/button11"
+            android:onClick="buttonGameBoardClicked"
+            android:text="+"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameBoard31"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button5"
+            app:layout_constraintStart_toEndOf="@+id/buttonGameBoard20"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="spread_inside" />
 
