@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="game_board_button" parent="Widget.MaterialComponents.Button">
+            <item name="android:textSize">36sp</item>
+            <item name="android:textColor">@color/white</item>
+            <item name="android:backgroundTint">#8A5454</item>
+    </style>
+    <style name="game_statistics_button" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:backgroundTint">#CA6A6A</item>
+    </style>
+</resources>
