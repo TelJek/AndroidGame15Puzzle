@@ -1,9 +1,12 @@
 package com.example.hw01_15puzzle
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.util.Log
 import android.widget.Button
+import android.widget.Chronometer
 import kotlinx.android.synthetic.main.game_statistics.*
 
 
@@ -17,13 +20,24 @@ class MainActivity : AppCompatActivity() {
     private var firstButtonY = 99
     private var counterForClicks = 0
     private var counterForMoves = 0
-    private var gameState = false
+    private var gameState = true
+//    timerState = #0 - is stopped #1 - is working
+    private var timerState = 0
+    private var timeWhenStopped: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d(TAG, "onCreate")
-//        updateUi()
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+
+        val boardJson = sharedPref.getString("state",null)
+        if (boardJson != null) {
+            logic.restoreBoardFromJson(boardJson)
+        }
+
+        updateUi()
     }
 
     private fun updateUi() {
@@ -36,6 +50,27 @@ class MainActivity : AppCompatActivity() {
                 } else button.text = logic.getBoard()[y][x].toString()
             }
         }
+        timerStartAndStop("")
+    }
+
+    private fun timerStartAndStop(state: String) {
+        val timer = resources.getIdentifier("textGameStatisticsTime", "id", packageName)
+        val clock = findViewById<Chronometer>(timer)
+        if (state == "reset") {
+            clock.base = SystemClock.elapsedRealtime()
+            clock.start()
+        }
+        if (state == "start") {
+            clock.base = SystemClock.elapsedRealtime() + timeWhenStopped
+            clock.start()
+            timerState = 1
+        }
+        if (state == "stop") {
+            clock.stop()
+            timeWhenStopped = clock.base - SystemClock.elapsedRealtime();
+            timerState = 0
+        }
+
     }
 
     fun buttonGameBoardClicked(view: android.view.View) {
@@ -68,20 +103,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonGameStatisticsShuffleClicked(view: android.view.View) {
-        logic.resetBoard()
+        timerStartAndStop("reset")
+        if (!gameState){
+            buttonGameStatisticsTimer.text = "PAUSE"
+            gameState = true
+            timerStartAndStop("reset")
+        }
+
+        logic.shuffleBoard()
+        logic.getBoard()
         counterForMoves = 0
         textGameStatisticsMoves.text = counterForMoves.toString()
-        buttonGameStatisticsTimer.text = "UNPAUSE"
-        gameState = false
+
         updateUi()
     }
 
     fun buttonGameStatisticsTimerClicked(view: android.view.View) {
-        if (buttonGameStatisticsTimer.text == "PAUSE"){
+        if (gameState){
             buttonGameStatisticsTimer.text = "UNPAUSE"
+            timerStartAndStop("stop")
             gameState = false
-        } else if (buttonGameStatisticsTimer.text == "UNPAUSE"){
+        } else if (!gameState){
             buttonGameStatisticsTimer.text = "PAUSE"
+            timerStartAndStop("start")
             gameState = true
         }
     }
@@ -90,4 +134,42 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         Log.d(TAG, "onStart")
     }
+
+    override fun onResume() {
+        super.onResume()
+        if (buttonGameStatisticsTimer.text != "UNPAUSE") {
+            if (!gameState){
+                gameState = true
+                timerStartAndStop("start")
+            }
+        }
+    }
+
+
+
+    override fun onPause() {
+        super.onPause()
+        if (buttonGameStatisticsTimer.text != "PAUSE") {
+            if (gameState) {
+                gameState = false
+                timerStartAndStop("stop")
+            }
+        }
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(TAG, "onStop")
+
+        val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+
+        with (sharedPref.edit()) {
+            val jsonStr = logic.getBoardJson()
+            Log.d(TAG, "Json: $jsonStr")
+            putString("state", jsonStr)
+            commit()
+        }
+    }
+
 }

@@ -8,6 +8,10 @@
     <style name="game_statistics_button" parent="Widget.MaterialComponents.Button">
         <item name="android:textSize">24sp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:backgroundTint">#CA6A6A</item>
+        <item name="android:backgroundTint">#FFC3B2B2</item>
+    </style>
+    <style name="game_statistics_text" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">34sp</item>
+        <item name="android:textColor">#FFC3B2B2</item>
     </style>
 </resources>
