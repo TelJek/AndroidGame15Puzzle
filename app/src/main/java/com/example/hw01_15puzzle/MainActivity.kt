@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private var counterForClicks = 0
     private var counterForMoves = 0
     private var gameState = true
-//    timerState = #0 - is stopped #1 - is working
+    //    timerState = #0 - is stopped #1 - is working
     private var timerState = 0
     private var timeWhenStopped: Long = 0
 
@@ -35,6 +35,18 @@ class MainActivity : AppCompatActivity() {
         val boardJson = sharedPref.getString("state",null)
         if (boardJson != null) {
             logic.restoreBoardFromJson(boardJson)
+        }
+
+        val savedMoves = sharedPref.getInt("Moves", 0)
+        if (savedMoves != 0) {
+            counterForMoves = sharedPref.getInt("Moves", 0)
+            textGameStatisticsMoves.text = counterForMoves.toString()
+        }
+
+        val savedTime = sharedPref.getLong("Time", 0)
+        if (savedTime.toInt() != 0) {
+            timeWhenStopped = sharedPref.getLong("Time", 0)
+            timerStartAndStop("start")
         }
 
         updateUi()
@@ -163,11 +175,12 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onStop")
 
         val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
+        timerStartAndStop("stop")
 
         with (sharedPref.edit()) {
-            val jsonStr = logic.getBoardJson()
-            Log.d(TAG, "Json: $jsonStr")
-            putString("state", jsonStr)
+            putString("state", logic.getBoardJson())
+            putInt("Moves", counterForMoves)
+            putLong("Time", timeWhenStopped)
             commit()
         }
     }
