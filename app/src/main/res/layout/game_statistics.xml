@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -11,77 +12,70 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="#837C7C"
+        android:background="#151313"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/textView9"
-            style="@style/game_statistics_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
-            android:text="TIME"
-            android:textColor="#FFC3B2B2"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/textView12"
-            app:layout_constraintEnd_toStartOf="@+id/textGameStatisticsTime"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
         <Chronometer
             android:id="@+id/textGameStatisticsTime"
             style="@style/game_statistics_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="16dp"
             android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/textGameStatisticsMoves"
+            app:layout_constraintBottom_toTopOf="@+id/textView12"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <TextView
-            android:id="@+id/textGameStatisticsMoves"
-            style="@style/game_statistics_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="0"
-            android:textSize="34sp"
-            app:layout_constraintBottom_toTopOf="@+id/buttonGameStatisticsTimer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toBottomOf="@+id/textGameStatisticsTime" />
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView12"
             style="@style/game_statistics_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8dp"
             android:text="MOVES"
             android:textSize="34sp"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameStatisticsTimer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textGameStatisticsMoves"
+            app:layout_constraintTop_toBottomOf="@+id/textGameStatisticsTime" />
+
+        <TextView
+            android:id="@+id/textGameStatisticsMoves"
+            style="@style/game_statistics_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="0"
+            android:textSize="34sp"
             app:layout_constraintBottom_toTopOf="@+id/buttonGameStatisticsShuffle"
-            app:layout_constraintEnd_toStartOf="@+id/textGameStatisticsMoves"
+            app:layout_constraintEnd_toStartOf="@+id/textView12"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/textGameStatisticsTime" />
+
+        <Button
+            android:id="@+id/buttonGameStatisticsShuffle"
+            style="@style/game_statistics_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="#5C5454"
+            android:onClick="buttonGameStatisticsShuffleClicked"
+            android:text="SHUFFLE"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameStatisticsLB"
+            app:layout_constraintEnd_toStartOf="@+id/buttonGameStatisticsTimer"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textGameStatisticsMoves" />
 
         <Button
             android:id="@+id/buttonGameStatisticsTimer"
@@ -89,30 +83,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
             android:onClick="buttonGameStatisticsTimerClicked"
             android:text="PAUSE"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/buttonGameStatisticsLB"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/buttonGameStatisticsShuffle"
-            app:layout_constraintTop_toBottomOf="@+id/textGameStatisticsMoves" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
         <Button
-            android:id="@+id/buttonGameStatisticsShuffle"
+            android:id="@+id/buttonGameStatisticsLB"
             style="@style/game_statistics_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="buttonGameStatisticsShuffleClicked"
-            android:text="SHUFFLE"
+            android:onClick="buttonGameStatisticsLB"
+            android:text="LEADERBOARD"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/buttonGameStatisticsTimer"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView12" />
+            app:layout_constraintTop_toBottomOf="@+id/textView12"
+            app:layout_constraintVertical_bias="0.735" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

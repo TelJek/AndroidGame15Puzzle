@@ -1,15 +1,36 @@
 package com.example.hw01_15puzzle
-
+import android.util.JsonWriter
+import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.json.JSONArray
+import java.io.File
 import java.util.*
+import kotlin.coroutines.coroutineContext
 
-class GameLogic {
+class GameLogic() {
+
     private var _board = arrayOf(
         arrayOf(1, 2, 3, 4),
         arrayOf(5, 6, 7, 8),
         arrayOf(9, 10, 11, 12),
         arrayOf(13, 14, 15, 16)
     )
+
+    private var _boardForWin = arrayOf(
+        arrayOf(1, 2, 3, 4),
+        arrayOf(5, 6, 7, 8),
+        arrayOf(9, 10, 11, 12),
+        arrayOf(13, 14, 15, 16)
+    )
+
+    private val leaderboard = ArrayList<Leaderboard>()
+
+    fun addWinner(winner: Leaderboard) {
+        leaderboard.plus(winner)
+    }
+
+    fun getLeaderBoard(): ArrayList<Leaderboard> {
+        return leaderboard
+    }
 
     fun getBoard(): Array<Array<Int>> {
         return _board
@@ -33,19 +54,35 @@ class GameLogic {
     }
 
     fun shuffleBoard() {
+        resetBoard()
         val copyOfBoard = _board.copyOf()
         var x = 0
-        while (x != 200) {
-            val rndAX = (0..3).random()
-            val rndAY = (0..3).random()
+        var rndAX = 3
+        var rndAY = 3
+        while (x != 2) {
             val rndBX = (0..3).random()
             val rndBY = (0..3).random()
             if (canIMove(rndAX, rndAY, rndBX, rndBY)) {
                 makeMove(rndAX, rndAY, rndBX, rndBY)
+                rndAX = rndBX
+                rndAY = rndBY
             }
             x++
         }
         _board = copyOfBoard
+    }
+
+    fun checkWin(): Boolean {
+        var counter = 0;
+        for (x in _board.indices) {
+            if (_board[x].contentEquals(_boardForWin[x])){
+                counter++
+            }
+        }
+        if (counter == 4) {
+            return true
+        }
+        return false
     }
 
     fun canIMove(aX: Int, aY: Int, bX: Int, bY: Int): Boolean {

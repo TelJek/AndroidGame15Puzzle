@@ -1,13 +1,22 @@
 package com.example.hw01_15puzzle
 
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.SystemClock
+import android.text.InputType
 import android.util.Log
 import android.widget.Button
 import android.widget.Chronometer
+import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.get
+import kotlinx.android.synthetic.main.activity_leader_board.*
+import kotlinx.android.synthetic.main.activity_leader_board.view.*
 import kotlinx.android.synthetic.main.game_statistics.*
+import kotlin.math.log
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,18 +30,31 @@ class MainActivity : AppCompatActivity() {
     private var counterForClicks = 0
     private var counterForMoves = 0
     private var gameState = true
+
     //    timerState = #0 - is stopped #1 - is working
     private var timerState = 0
     private var timeWhenStopped: Long = 0
+    private var alreadyWon = false
+    private var allowToAddWinner = false
+    private var dialogText = ""
+    private lateinit var playerRepository: PlayerRepository
+    var timer: Int = 0
+    lateinit var clock: Chronometer
+    var elapsedMillis: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.d(TAG, "onCreate")
 
+        timer = resources.getIdentifier("textGameStatisticsTime", "id", packageName)
+        clock = findViewById<Chronometer>(timer)
+
+        playerRepository = PlayerRepository(applicationContext)
+
         val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
 
-        val boardJson = sharedPref.getString("state",null)
+        val boardJson = sharedPref.getString("state", null)
         if (boardJson != null) {
             logic.restoreBoardFromJson(boardJson)
         }
@@ -62,12 +84,30 @@ class MainActivity : AppCompatActivity() {
                 } else button.text = logic.getBoard()[y][x].toString()
             }
         }
+
         timerStartAndStop("")
     }
 
+    private fun openWinDialog() {
+        val builder: android.app.AlertDialog.Builder = android.app.AlertDialog.Builder(this)
+        builder.setTitle("Congratulations!")
+
+        val input = EditText(this)
+
+        input.hint = "Now you have to enter your name"
+        input.inputType = InputType.TYPE_CLASS_TEXT
+        builder.setView(input)
+
+
+        builder.setPositiveButton("OK") { dialog, which ->
+            dialogText = input.text.toString()
+        }
+        builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
+
+        builder.show()
+    }
+
     private fun timerStartAndStop(state: String) {
-        val timer = resources.getIdentifier("textGameStatisticsTime", "id", packageName)
-        val clock = findViewById<Chronometer>(timer)
         if (state == "reset") {
             clock.base = SystemClock.elapsedRealtime()
             clock.start()
@@ -88,17 +128,22 @@ class MainActivity : AppCompatActivity() {
     fun buttonGameBoardClicked(view: android.view.View) {
         if (gameState) {
             val idStr = resources.getResourceEntryName(view.id)
-            Log.d("buttonGameBoardClicked", logic.getBoard()[idStr[16].toString().toInt()][idStr[15].toString().toInt()].toString())
+            Log.d("buttonGameBoardClicked",
+                logic.getBoard()[idStr[16].toString().toInt()][idStr[15].toString()
+                    .toInt()].toString()
+            )
             if (counterForClicks == 0) {
                 firstButtonX = idStr[15].toString().toInt()
                 firstButtonY = idStr[16].toString().toInt()
                 counterForClicks++
             } else if (counterForClicks == 1) {
                 if (firstButtonX != idStr[15].toString().toInt() || firstButtonY != idStr[16]
-                        .toString().toInt()) {
+                        .toString().toInt()
+                ) {
                     val x = idStr[15].toString().toInt()
                     val y = idStr[16].toString().toInt()
-                    if (logic.getBoard()[y][x].toString() == "16" || logic.getBoard()[firstButtonY][firstButtonX].toString() == "16") {
+                    if (logic.getBoard()[y][x].toString() == "16" || logic
+                            .getBoard()[firstButtonY][firstButtonX].toString() == "16") {
                         if (logic.canIMove(firstButtonX, firstButtonY, x, y)) {
                             logic.makeMove(firstButtonX, firstButtonY, x, y)
                             counterForClicks--
@@ -108,15 +153,40 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         counterForClicks--
                     }
+                    if (!alreadyWon) {
+                        if (logic.checkWin()) {
+                            timerStartAndStop("stop")
+                            elapsedMillis = SystemClock.elapsedRealtime() - clock.base
+                            openWinDialog()
+                            alreadyWon = true
+                            allowToAddWinner = true
+                            println("dialogText: $dialogText")
+                            logic.resetBoard()
+                        }
+                    }
                     updateUi()
                 }
             }
         }
     }
 
+    fun buttonGameStatisticsLB(view: android.view.View) {
+        val intent = Intent(this, ActivityLeaderBoard::class.java)
+        if (allowToAddWinner) {
+            println("dialogText: $dialogText")
+            logic.addWinner((Leaderboard(dialogText, ((elapsedMillis / 1000) - 1).toInt(), counterForMoves)))
+            val db = playerRepository.open()
+            db.add(Leaderboard(dialogText, ((elapsedMillis / 1000) - 1).toInt(), counterForMoves))
+            playerRepository.close()
+            allowToAddWinner = false
+        }
+        startActivity(intent)
+    }
+
     fun buttonGameStatisticsShuffleClicked(view: android.view.View) {
         timerStartAndStop("reset")
-        if (!gameState){
+        alreadyWon = false
+        if (!gameState) {
             buttonGameStatisticsTimer.text = "PAUSE"
             gameState = true
             timerStartAndStop("reset")
@@ -131,11 +201,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonGameStatisticsTimerClicked(view: android.view.View) {
-        if (gameState){
+        if (gameState) {
             buttonGameStatisticsTimer.text = "UNPAUSE"
             timerStartAndStop("stop")
             gameState = false
-        } else if (!gameState){
+        } else if (!gameState) {
             buttonGameStatisticsTimer.text = "PAUSE"
             timerStartAndStop("start")
             gameState = true
@@ -150,13 +220,12 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         if (buttonGameStatisticsTimer.text != "UNPAUSE") {
-            if (!gameState){
+            if (!gameState) {
                 gameState = true
                 timerStartAndStop("start")
             }
         }
     }
-
 
 
     override fun onPause() {
@@ -177,12 +246,11 @@ class MainActivity : AppCompatActivity() {
         val sharedPref = getPreferences(Context.MODE_PRIVATE) ?: return
         timerStartAndStop("stop")
 
-        with (sharedPref.edit()) {
+        with(sharedPref.edit()) {
             putString("state", logic.getBoardJson())
             putInt("Moves", counterForMoves)
             putLong("Time", timeWhenStopped)
             commit()
         }
     }
-
 }

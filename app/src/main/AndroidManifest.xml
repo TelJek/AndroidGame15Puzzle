@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HW0115Puzzle">
         <activity
+            android:name=".ActivityLeaderBoard"
+            android:exported="true" />
+        <activity
+            android:name=".ScrollingActivityWIthLeaderBoard"
+            android:exported="true"
+            android:label="@string/title_activity_scrolling_with_leader_board"
+            android:theme="@style/Theme.HW0115Puzzle.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
