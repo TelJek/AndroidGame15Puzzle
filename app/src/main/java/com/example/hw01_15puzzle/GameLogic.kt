@@ -59,7 +59,7 @@ class GameLogic() {
         var x = 0
         var rndAX = 3
         var rndAY = 3
-        while (x != 2) {
+        while (x != 200) {
             val rndBX = (0..3).random()
             val rndBY = (0..3).random()
             if (canIMove(rndAX, rndAY, rndBX, rndBY)) {
