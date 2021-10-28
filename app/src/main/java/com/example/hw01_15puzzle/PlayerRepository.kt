@@ -22,9 +22,21 @@ class PlayerRepository(val context: Context) {
         return this
     }
 
-    fun getRepoData(): Cursor {
+    fun getRepoData(): List<Leaderboard> {
+        val result = ArrayList<Leaderboard>()
         dbHelper = DbHelper(context)
-        return dbHelper.getData()
+        val cursor = dbHelper.getData()
+        while (cursor.moveToNext()) {
+            result.add(
+                Leaderboard(
+                    cursor.getInt(0),
+                    cursor.getString(1),
+                    cursor.getInt(2),
+                    cursor.getInt(3)
+                )
+            )
+        }
+        return result
     }
 
     fun close() {
@@ -37,5 +49,18 @@ class PlayerRepository(val context: Context) {
         contentValue.put(DbHelper.PLAYER_MOVES, player.playerMoves)
         contentValue.put(DbHelper.PLAYER_TIME, player.playerTime)
         db.insert(DbHelper.PLAYER_TABLE_NAME, null, contentValue)
+    }
+
+    fun delete(leaderboard: Leaderboard) {
+        delete(leaderboard.id)
+    }
+
+    fun delete(id: Int) {
+        open()
+        db.delete(DbHelper.PLAYER_TABLE_NAME, "_id=?", arrayOf(id.toString()))
+    }
+
+    fun update(leaderboard: Leaderboard) {
+
     }
 }

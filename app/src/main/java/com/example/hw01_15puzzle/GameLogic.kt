@@ -1,4 +1,5 @@
 package com.example.hw01_15puzzle
+
 import android.util.JsonWriter
 import kotlinx.android.synthetic.main.activity_leader_board.*
 import org.json.JSONArray
@@ -36,16 +37,20 @@ class GameLogic() {
         return _board
     }
 
-    fun makeMove(aX: Int, aY: Int, bX: Int, bY: Int){
+    fun getWinnerBoard(): Array<Array<Int>> {
+        return _boardForWin
+    }
+
+    fun makeMove(aX: Int, aY: Int, bX: Int, bY: Int) {
         val temp = _board[aY][aX]
         _board[aY][aX] = _board[bY][bX]
         _board[bY][bX] = temp;
 
     }
 
-    fun resetBoard(){
+    fun resetBoard() {
         var counter = 1
-        for (x in _board.indices){
+        for (x in _board.indices) {
             for (y in _board[x].indices) {
                 _board[x][y] = counter;
                 counter++;
@@ -75,7 +80,7 @@ class GameLogic() {
     fun checkWin(): Boolean {
         var counter = 0;
         for (x in _board.indices) {
-            if (_board[x].contentEquals(_boardForWin[x])){
+            if (_board[x].contentEquals(_boardForWin[x])) {
                 counter++
             }
         }
@@ -96,14 +101,14 @@ class GameLogic() {
         } else false;
     }
 
-    fun getBoardJson(): String{
+    fun getBoardJson(): String {
         val jsonArray = JSONArray(_board);
         return jsonArray.toString();
     }
 
-    fun restoreBoardFromJson(boardJson: String){
+    fun restoreBoardFromJson(boardJson: String) {
         val jsonArray = JSONArray(boardJson)
-        for (x in 0 until jsonArray.length()){
+        for (x in 0 until jsonArray.length()) {
             for (y in 0 until (jsonArray[x] as JSONArray).length()) {
                 _board[x][y] = (jsonArray[x] as JSONArray)[y] as Int
             }

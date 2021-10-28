@@ -84,7 +84,6 @@ class MainActivity : AppCompatActivity() {
                 } else button.text = logic.getBoard()[y][x].toString()
             }
         }
-
         timerStartAndStop("")
     }
 
@@ -126,9 +125,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonGameBoardClicked(view: android.view.View) {
+        addWinnerToLB()
         if (gameState) {
             val idStr = resources.getResourceEntryName(view.id)
-            Log.d("buttonGameBoardClicked",
+            Log.d(
+                "buttonGameBoardClicked",
                 logic.getBoard()[idStr[16].toString().toInt()][idStr[15].toString()
                     .toInt()].toString()
             )
@@ -143,7 +144,8 @@ class MainActivity : AppCompatActivity() {
                     val x = idStr[15].toString().toInt()
                     val y = idStr[16].toString().toInt()
                     if (logic.getBoard()[y][x].toString() == "16" || logic
-                            .getBoard()[firstButtonY][firstButtonX].toString() == "16") {
+                            .getBoard()[firstButtonY][firstButtonX].toString() == "16"
+                    ) {
                         if (logic.canIMove(firstButtonX, firstButtonY, x, y)) {
                             logic.makeMove(firstButtonX, firstButtonY, x, y)
                             counterForClicks--
@@ -172,18 +174,31 @@ class MainActivity : AppCompatActivity() {
 
     fun buttonGameStatisticsLB(view: android.view.View) {
         val intent = Intent(this, ActivityLeaderBoard::class.java)
+        addWinnerToLB()
+        startActivity(intent)
+    }
+
+    private fun addWinnerToLB() {
         if (allowToAddWinner) {
             println("dialogText: $dialogText")
-            logic.addWinner((Leaderboard(dialogText, ((elapsedMillis / 1000) - 1).toInt(), counterForMoves)))
+            logic.addWinner(
+                (Leaderboard(
+                    dialogText,
+                    ((elapsedMillis / 1000) - 1).toInt(),
+                    counterForMoves
+                ))
+            )
             val db = playerRepository.open()
             db.add(Leaderboard(dialogText, ((elapsedMillis / 1000) - 1).toInt(), counterForMoves))
             playerRepository.close()
             allowToAddWinner = false
         }
-        startActivity(intent)
+        Log.d("NAMETOLB", dialogText)
     }
 
     fun buttonGameStatisticsShuffleClicked(view: android.view.View) {
+        addWinnerToLB()
+
         timerStartAndStop("reset")
         alreadyWon = false
         if (!gameState) {
@@ -201,6 +216,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun buttonGameStatisticsTimerClicked(view: android.view.View) {
+        addWinnerToLB()
         if (gameState) {
             buttonGameStatisticsTimer.text = "UNPAUSE"
             timerStartAndStop("stop")
@@ -229,6 +245,8 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onPause() {
+        addWinnerToLB()
+        Log.d("aha", "onPause")
         super.onPause()
         if (buttonGameStatisticsTimer.text != "PAUSE") {
             if (gameState) {
@@ -252,5 +270,10 @@ class MainActivity : AppCompatActivity() {
             putLong("Time", timeWhenStopped)
             commit()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        playerRepository.close()
     }
 }
